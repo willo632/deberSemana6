@@ -1,0 +1,144 @@
+<div class="page-wrap">
+
+  <!-- ── Page header ── -->
+  <div class="page-header animate-fadeInUp">
+    <div>
+      <h1 class="page-title">Clientes</h1>
+      <p class="page-subtitle">
+        Gestión y administración de la cartera de clientes
+        @if (!loading() && !error()) {
+          &nbsp;&mdash;&nbsp;<strong>{{ filtered().length }}</strong> registro(s)
+        }
+      </p>
+    </div>
+    <div class="page-actions">
+      <button class="btn btn-outline-secondary btn-xs">
+        <i class="bi bi-download me-1"></i>Exportar
+      </button>
+      <a routerLink="/clientes/nuevo" class="btn btn-primary btn-xs">
+        <i class="bi bi-person-plus-fill me-1"></i>Nuevo Cliente
+      </a>
+    </div>
+  </div>
+
+  <!-- ── Main card ────────────────────────────── -->
+  <div class="card-elevated animate-fadeInUp" style="animation-delay:.1s">
+
+    <!-- Toolbar -->
+    <div class="tbl-toolbar">
+      <div class="search-box">
+        <i class="bi bi-search"></i>
+        <input type="search"
+               placeholder="Buscar por nombre, cédula, correo o teléfono…"
+               [value]="search()"
+               (input)="onSearch($event)" />
+      </div>
+      <div class="toolbar-right">
+        <button class="btn btn-outline-secondary btn-xs">
+          <i class="bi bi-funnel me-1"></i>Filtros
+        </button>
+        <button class="btn btn-outline-secondary btn-xs">
+          <i class="bi bi-arrow-clockwise me-1"></i>Actualizar
+        </button>
+      </div>
+    </div>
+
+    <!-- ── Loading ── -->
+    @if (loading()) {
+      <div class="state-box">
+        <div class="spinner-border text-primary" role="status" style="width:2.5rem;height:2.5rem">
+          <span class="visually-hidden">Cargando…</span>
+        </div>
+        <p class="state-label">Cargando clientes…</p>
+      </div>
+    }
+
+    <!-- ── Error ── -->
+    @if (!loading() && error()) {
+      <div class="state-box">
+        <div class="err-icon"><i class="bi bi-wifi-off"></i></div>
+        <p class="state-label text-danger">{{ error() }}</p>
+        <button class="btn btn-outline-primary btn-xs mt-2" (click)="ngOnInit()">
+          <i class="bi bi-arrow-clockwise me-1"></i>Reintentar
+        </button>
+      </div>
+    }
+
+    <!-- ── Empty ── -->
+    @if (!loading() && !error() && filtered().length === 0) {
+      <div class="state-box">
+        <div class="empty-icon"><i class="bi bi-people"></i></div>
+        <p class="state-label">
+          {{ search() ? 'Sin resultados para "' + search() + '"' : 'Aún no hay clientes registrados.' }}
+        </p>
+        @if (!search()) {
+          <a routerLink="/clientes/nuevo" class="btn btn-primary btn-xs mt-2">
+            <i class="bi bi-person-plus-fill me-1"></i>Registrar primer cliente
+          </a>
+        }
+      </div>
+    }
+
+    <!-- ── Table ── -->
+    @if (!loading() && !error() && filtered().length > 0) {
+      <div class="table-responsive">
+        <table class="table table-hover mb-0 cl-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Cliente</th>
+              <th>Cédula</th>
+              <th>Teléfono</th>
+              <th>Dirección</th>
+              <th>Correo</th>
+              <th class="text-end">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (c of filtered(); track c.id; let i = $index) {
+              <tr class="cl-row">
+                <td class="num-cell">{{ i + 1 }}</td>
+                <td>
+                  <div class="cl-cell">
+                    <div class="cl-av">{{ initials(c.nombres) }}</div>
+                    <div>
+                      <div class="cl-name">{{ c.nombres }}</div>
+                      <div class="cl-email">{{ c.correo }}</div>
+                    </div>
+                  </div>
+                </td>
+                <td><code class="cod-badge">{{ c.cedula }}</code></td>
+                <td class="muted-cell">
+                  <i class="bi bi-telephone me-1 text-muted"></i>{{ c.telefono }}
+                </td>
+                <td class="muted-cell addr-cell">{{ c.direccion }}</td>
+                <td class="muted-cell">{{ c.correo }}</td>
+                <td>
+                  <div class="act-group">
+                    <button class="act-btn act-view"  title="Ver detalle">
+                      <i class="bi bi-eye"></i>
+                    </button>
+                    <button class="act-btn act-edit"  title="Editar">
+                      <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="act-btn act-del"   title="Eliminar"
+                            (click)="confirmDelete(c.id)">
+                      <i class="bi bi-trash3"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Footer count -->
+      <div class="tbl-footer">
+        Mostrando <strong>{{ filtered().length }}</strong> de
+        <strong>{{ clientes().length }}</strong> clientes
+      </div>
+    }
+
+  </div>
+</div>

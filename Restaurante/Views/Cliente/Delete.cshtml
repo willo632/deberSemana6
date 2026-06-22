@@ -1,0 +1,94 @@
+@model Restaurante.Models.ClienteModel
+
+@{
+    ViewData["Title"] = "Eliminar Cliente";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <!-- Alerta de advertencia -->
+            <div class="alert alert-danger border-danger shadow-sm" role="alert">
+                <div class="d-flex align-items-center mb-3">
+                    <i class="bi bi-exclamation-triangle-fill fs-1 me-3"></i>
+                    <div>
+                        <h4 class="alert-heading mb-1">¿Está seguro que desea eliminar este cliente?</h4>
+                        <p class="mb-0">Esta acción no se puede deshacer.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card con información del cliente -->
+            <div class="card shadow-sm">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-person-x me-2"></i>Cliente a Eliminar
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <!-- Cédula -->
+                        <div class="col-md-6">
+                            <div class="border-start border-danger border-4 ps-3 py-2 bg-light">
+                                <label class="text-muted small mb-1">Cédula</label>
+                                <p class="h5 mb-0 fw-bold">@Model.Cedula</p>
+                            </div>
+                        </div>
+
+                        <!-- Nombre Completo -->
+                        <div class="col-12">
+                            <div class="border-start border-danger border-4 ps-3 py-2 bg-light">
+                                <label class="text-muted small mb-1">Nombre Completo</label>
+                                <p class="h5 mb-0 fw-bold">@Model.Nombre @Model.Apellido</p>
+                            </div>
+                        </div>
+
+                        <!-- Correo Electrónico -->
+                        <div class="col-md-6">
+                            <div class="border-start border-danger border-4 ps-3 py-2 bg-light">
+                                <label class="text-muted small mb-1">Correo Electrónico</label>
+                                <p class="mb-0">
+                                    <i class="bi bi-envelope"></i> @Model.Email
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Teléfono -->
+                        <div class="col-md-6">
+                            <div class="border-start border-danger border-4 ps-3 py-2 bg-light">
+                                <label class="text-muted small mb-1">Teléfono</label>
+                                <p class="mb-0">
+                                    <i class="bi bi-telephone"></i> @Model.Telefono
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer bg-light">
+                    <form asp-action="Delete" method="post">
+                        <input type="hidden" asp-for="Id" />
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a asp-action="Index" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-danger btn-lg">
+                                <i class="bi bi-trash-fill me-2"></i>Confirmar Eliminación
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Información adicional -->
+            <div class="alert alert-warning mt-3" role="alert">
+                <i class="bi bi-info-circle me-2"></i>
+                <strong>Nota:</strong> Al eliminar este cliente, se eliminarán también todos los registros asociados.
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+}

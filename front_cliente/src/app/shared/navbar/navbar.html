@@ -1,0 +1,62 @@
+<nav class="app-navbar navbar navbar-expand-lg">
+  <div class="nv-container">
+
+    <!-- Mobile toggle -->
+    <button class="nv-toggle d-lg-none" type="button"
+            data-bs-toggle="collapse" data-bs-target="#mainNav"
+            aria-controls="mainNav" aria-expanded="false"
+            aria-label="Abrir menú">
+      <i class="bi bi-list"></i>
+    </button>
+
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="nv-menu">
+
+        @for (item of navItems(); track item.label) {
+
+          @if (!item.children) {
+            <li class="nv-item">
+              <a class="nv-link"
+                 [routerLink]="item.route"
+                 routerLinkActive="nv-active"
+                 [routerLinkActiveOptions]="{ exact: true }">
+                <i [class]="'bi ' + item.icon"></i>
+                <span>{{ item.label }}</span>
+              </a>
+            </li>
+
+          } @else {
+            <li class="nv-item dropdown">
+              <a class="nv-link" href="#"
+                 data-bs-toggle="dropdown" aria-expanded="false"
+                 (click)="$event.preventDefault()">
+                <i [class]="'bi ' + item.icon"></i>
+                <span>{{ item.label }}</span>
+                <i class="bi bi-chevron-down nv-chev"></i>
+              </a>
+
+              <ul class="dropdown-menu nv-dropdown">
+                @for (child of item.children; track child.label) {
+                  <li>
+                    <a class="dropdown-item nv-dd-item"
+                       [routerLink]="child.route"
+                       routerLinkActive="nv-dd-active">
+                      <i [class]="'bi ' + child.icon"></i>
+                      <span>{{ child.label }}</span>
+                      @if (child.badge) {
+                        <span class="nv-badge ms-auto">{{ child.badge }}</span>
+                      }
+                    </a>
+                  </li>
+                }
+              </ul>
+            </li>
+          }
+
+        }
+
+      </ul>
+    </div>
+
+  </div>
+</nav>

@@ -1,0 +1,197 @@
+<div class="page-wrap">
+
+  <!-- ── Page header ── -->
+  <div class="page-header animate-fadeInUp">
+    <div>
+      <h1 class="page-title">Dashboard</h1>
+      <p class="page-subtitle">Bienvenido de vuelta, Juan &mdash; aquí está tu resumen del día.</p>
+    </div>
+    <div class="page-actions">
+      <button class="btn btn-outline-secondary btn-xs">
+        <i class="bi bi-download me-1"></i>Exportar
+      </button>
+      <button class="btn btn-primary btn-xs">
+        <i class="bi bi-plus-lg me-1"></i>Nueva Venta
+      </button>
+    </div>
+  </div>
+
+  <!-- ╔══════════════════════════════════════════╗
+       ║  KPI Cards                               ║
+       ╚══════════════════════════════════════════╝ -->
+  <div class="row g-3 mb-4">
+    @for (k of kpis(); track k.title; let i = $index) {
+      <div class="col-6 col-xl-3 animate-fadeInUp"
+           [style.animation-delay]="(i * 0.08) + 's'">
+        <div class="kpi-card card-elevated">
+          <div class="kpi-head">
+            <span class="kpi-label">{{ k.title }}</span>
+            <div class="kpi-icon" [style.background]="k.iconBg">
+              <i [class]="'bi ' + k.icon" [style.color]="k.iconClr"></i>
+            </div>
+          </div>
+          <div class="kpi-val">{{ k.value }}</div>
+          <div class="kpi-foot">
+            <span class="kpi-badge"
+                  [class.kpi-up]="k.trend === 'up'"
+                  [class.kpi-down]="k.trend === 'down'">
+              <i [class]="'bi ' + (k.trend === 'up' ? 'bi-arrow-up-short' : 'bi-arrow-down-short')"></i>
+              {{ k.change }}
+            </span>
+            <span class="kpi-vs">vs mes anterior</span>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- ╔══════════════════════════════════════════╗
+       ║  Chart row                               ║
+       ╚══════════════════════════════════════════╝ -->
+  <div class="row g-3 mb-4">
+
+    <!-- Bar chart -->
+    <div class="col-lg-8 animate-fadeInUp" style="animation-delay:.32s">
+      <div class="chart-card card-elevated">
+
+        <div class="cc-header">
+          <div>
+            <h6 class="cc-title">Ventas Mensuales 2026</h6>
+            <p class="cc-sub">Ingresos totales por mes &bull; miles USD</p>
+          </div>
+          <div class="cc-legend">
+            <span class="lg-dot" style="background:var(--clr-primary)"></span>
+            <span>Ingresos</span>
+            <span class="lg-dot ms-2" style="background:var(--clr-accent)"></span>
+            <span>Meta</span>
+          </div>
+        </div>
+
+        <!-- Y-axis labels + bars -->
+        <div class="chart-area">
+          <div class="y-labels">
+            <span>$100K</span><span>$75K</span><span>$50K</span><span>$25K</span><span>$0</span>
+          </div>
+          <div class="bars-wrap">
+            <!-- Grid lines -->
+            <div class="grid-lines">
+              <div class="gl"></div><div class="gl"></div>
+              <div class="gl"></div><div class="gl"></div>
+            </div>
+            <!-- Bars -->
+            <div class="bars">
+              @for (b of chartBars(); track b.month) {
+                <div class="bar-col">
+                  <div class="bar-tip">{{ b.label }}</div>
+                  <div class="bar-fill" [style.height.%]="b.value"></div>
+                  <span class="bar-lbl">{{ b.month }}</span>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Top products -->
+    <div class="col-lg-4 animate-fadeInUp" style="animation-delay:.4s">
+      <div class="card-elevated tp-card">
+        <div class="cc-header mb-3">
+          <div>
+            <h6 class="cc-title">Productos Top</h6>
+            <p class="cc-sub">Por volumen de ventas</p>
+          </div>
+          <a href="#" class="cc-link">Ver todos</a>
+        </div>
+
+        <div class="tp-list">
+          @for (p of topProducts(); track p.name; let i = $index) {
+            <div class="tp-item">
+              <div class="tp-rank">{{ i + 1 }}</div>
+              <div class="tp-info">
+                <div class="tp-name">{{ p.name }}</div>
+                <div class="tp-bar-wrap">
+                  <div class="tp-track">
+                    <div class="tp-fill" [style.width.%]="p.pct"></div>
+                  </div>
+                  <span class="tp-sales">{{ p.sales }} ventas</span>
+                </div>
+              </div>
+              <div class="tp-rev">{{ p.revenue }}</div>
+            </div>
+          }
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ╔══════════════════════════════════════════╗
+       ║  Recent orders table                     ║
+       ╚══════════════════════════════════════════╝ -->
+  <div class="row animate-fadeInUp" style="animation-delay:.48s">
+    <div class="col-12">
+      <div class="card-elevated tbl-card">
+
+        <div class="cc-header mb-3">
+          <div>
+            <h6 class="cc-title">Órdenes Recientes</h6>
+            <p class="cc-sub">Últimas {{ orders().length }} transacciones del sistema</p>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-outline-secondary btn-xs">
+              <i class="bi bi-funnel me-1"></i>Filtrar
+            </button>
+            <a href="#" class="btn btn-primary btn-xs">Ver todas</a>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover mb-0 ord-table">
+            <thead>
+              <tr>
+                <th>ID Orden</th>
+                <th>Cliente</th>
+                <th>Producto / Servicio</th>
+                <th>Monto</th>
+                <th>Estado</th>
+                <th>Fecha</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (o of orders(); track o.id) {
+                <tr>
+                  <td><code class="ord-id">{{ o.id }}</code></td>
+                  <td>
+                    <div class="cl-cell">
+                      <div class="cl-av">{{ o.initial }}</div>
+                      <span>{{ o.client }}</span>
+                    </div>
+                  </td>
+                  <td class="prod-cell">{{ o.product }}</td>
+                  <td class="amt-cell">{{ o.amount }}</td>
+                  <td>
+                    <span class="badge-status" [class]="statusCls(o.status)">
+                      {{ o.status }}
+                    </span>
+                  </td>
+                  <td class="dt-cell">{{ o.date }}</td>
+                  <td>
+                    <button class="row-act">
+                      <i class="bi bi-three-dots"></i>
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>

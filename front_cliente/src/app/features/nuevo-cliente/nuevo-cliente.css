@@ -1,0 +1,121 @@
+/* page-wrap, page-header, page-title, page-subtitle → styles.css */
+
+/* ── Breadcrumb ──────────────────── */
+.breadcrumb-nav { display: flex; align-items: center; gap: .4rem; margin-bottom: .25rem; }
+.bc-link {
+  font-size: .8rem; font-weight: 600;
+  color: var(--clr-primary,#0d6efd); text-decoration: none;
+  transition: opacity .15s;
+}
+.bc-link:hover { opacity: .75; }
+.bc-sep { font-size: .65rem; color: #cbd5e1; }
+.bc-current { font-size: .8rem; color: var(--clr-text-muted,#64748b); }
+
+/* ── Success alert ───────────────── */
+.alert-success-card {
+  display: flex; align-items: center; gap: 1rem;
+  background: #f0fdf4; border: 1px solid #bbf7d0;
+  border-radius: var(--radius-lg,1rem);
+  padding: 1.25rem 1.5rem; margin-bottom: 1.5rem;
+}
+.asc-icon { font-size: 1.75rem; color: #16a34a; flex-shrink: 0; }
+.asc-title { font-size: .9375rem; font-weight: 700; color: #15803d; margin: 0; }
+.asc-sub { font-size: .8rem; color: #166534; margin: .2rem 0 0; }
+.asc-spinner { margin-left: auto; }
+
+/* ── Error alert ─────────────────── */
+.alert-error-card {
+  display: flex; align-items: center; gap: .75rem;
+  background: #fff1f2; border: 1px solid #fecdd3;
+  border-radius: var(--radius-lg,1rem);
+  padding: 1rem 1.25rem; margin-bottom: 1.5rem;
+  font-size: .875rem; color: #be123c;
+}
+.alert-error-card i:first-child { font-size: 1.1rem; flex-shrink: 0; }
+.alert-error-card span { flex: 1; }
+.btn-close-alert {
+  background: transparent; border: none; cursor: pointer;
+  color: #be123c; padding: 2px; border-radius: 4px;
+  display: flex; align-items: center;
+  transition: background .15s;
+}
+.btn-close-alert:hover { background: #fecdd3; }
+
+/* ── Form card ───────────────────── */
+.form-card { padding: 1.75rem 2rem; }
+
+.fc-header { display: flex; align-items: center; gap: 1rem; }
+.fc-icon {
+  width: 46px; height: 46px; border-radius: 12px; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--clr-primary,#0d6efd), var(--clr-secondary,#4f46e5));
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 1.2rem;
+  box-shadow: 0 4px 12px rgba(13,110,253,.25);
+}
+.fc-title { font-size: 1rem; font-weight: 700; color: var(--clr-text,#1e293b); margin: 0; }
+.fc-sub   { font-size: .8rem; color: var(--clr-text-muted,#64748b); margin: .2rem 0 0; }
+
+.fc-divider { border-color: var(--clr-border,#e2e8f0); margin: 1.25rem 0 1.5rem; }
+
+/* ── Form fields ─────────────────── */
+.form-group { display: flex; flex-direction: column; gap: .375rem; }
+
+.form-lbl {
+  font-size: .8rem; font-weight: 700;
+  color: var(--clr-text,#1e293b);
+  text-transform: uppercase; letter-spacing: .04em;
+  display: flex; align-items: center;
+}
+.form-lbl i { color: var(--clr-text-muted,#64748b); }
+
+.req-mark { color: #ef4444; margin-left: .15rem; }
+
+.form-inp {
+  width: 100%; padding: .625rem .875rem;
+  border: 1.5px solid var(--clr-border,#e2e8f0);
+  border-radius: var(--radius-md,.75rem);
+  font-size: .9rem; font-family: inherit;
+  color: var(--clr-text,#1e293b);
+  background: var(--clr-bg,#f8fafc);
+  transition: border-color .2s, box-shadow .2s, background .2s;
+  outline: none;
+}
+.form-inp::placeholder { color: #cbd5e1; }
+.form-inp:focus {
+  border-color: var(--clr-primary,#0d6efd);
+  box-shadow: 0 0 0 3px rgba(13,110,253,.1);
+  background: #fff;
+}
+
+/* Error state */
+.has-error .form-inp {
+  border-color: #ef4444;
+  background: #fff1f2;
+}
+.has-error .form-inp:focus {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239,68,68,.1);
+}
+.field-error {
+  font-size: .75rem; color: #dc2626;
+  display: flex; align-items: center; gap: .3rem;
+}
+
+/* ── Form footer ─────────────────── */
+.form-footer {
+  display: flex; align-items: center;
+  justify-content: space-between; flex-wrap: wrap;
+  gap: .75rem; margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--clr-border,#e2e8f0);
+}
+
+.submit-btn { min-width: 150px; justify-content: center; }
+
+@media (max-width: 575.98px) {
+  .form-card { padding: 1.25rem; }
+  .form-footer { flex-direction: column-reverse; }
+  .form-footer > * { width: 100%; }
+  .d-flex.gap-2 { width: 100%; }
+  .d-flex.gap-2 > * { flex: 1; }
+}

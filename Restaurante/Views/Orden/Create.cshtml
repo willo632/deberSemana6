@@ -1,0 +1,111 @@
+@model Restaurante.Models.ViewModel.OrdenCreateViewModel
+
+@{
+    ViewData["Title"] = "Crear orden";
+}
+
+<h1>Crear orden</h1>
+
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <label asp-for="ClienteId" class="form-label fw-bold"></label>
+            <input asp-for="ClienteCedula" id="clienteBuscar" class="form-control form-control-lg" list="clientesLista" placeholder="Escriba la cédula del cliente" autocomplete="off" />
+            <input asp-for="ClienteId" type="hidden" id="clienteId" />
+            <datalist id="clientesLista">
+                @foreach (var cliente in Model.Cliente)
+                {
+                    <option value="@cliente.NombreCompleto" data-id="@cliente.ClienteId"></option>
+                }
+            </datalist>
+            <div class="form-text">Escriba el nombre y seleccione un cliente de la lista.</div>
+        </div>
+        <span asp-validation-for="ClienteId" class="text-danger"></span>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <h4>Menus disponibles</h4>
+            <div class="row g-3">
+                @foreach (var menu in Model.Menus)
+                {
+                    <div class="col-md-6">
+                        <div class="card h-100 shadow-sm menu-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between gap-2">
+                                    <h5 class="card-title mb-1">@menu.Nombre</h5>
+                                    <span class="badge bg-success align-self-start">@menu.Precio.ToString("C")</span>
+                                </div>
+                                <p class="card-text text-muted small">@menu.Descripcion</p>
+                                <div class="input-group">
+                                    <input type="number" class="form-control cantidad-menu" min="1" max="1000" value="1" aria-label="Cantidad" />
+                                    <button type="button"
+                                            class="btn btn-outline-primary agregar-menu"
+                                            data-id="@menu.MenuId"
+                                            data-nombre="@menu.Nombre"
+                                            data-precio="@menu.Precio.ToString(System.Globalization.CultureInfo.InvariantCulture)">
+                                        Agregar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="card shadow-sm sticky-top" style="top: 1rem;">
+                <div class="card-header bg-primary text-white">
+                    Detalle de la orden
+                </div>
+                <div class="card-body">
+                    <div id="detalleVacio" class="alert alert-info mb-3">
+                        Aun no ha agregado menus a la orden.
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Menu</th>
+                                    <th>Cant.</th>
+                                    <th>Subtotal</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="detalleOrden"></tbody>
+                        </table>
+                    </div>
+                    <div id="detalleInputs"></div>
+                    <hr />
+                    <div class="d-flex justify-content-between">
+                        <span>Subtotal</span>
+                        <strong id="subtotalVista">$0.00</strong>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>IVA 15%</span>
+                        <strong id="ivaVista">$0.00</strong>
+                    </div>
+                    <div class="d-flex justify-content-between fs-5 mt-2">
+                        <span>Total</span>
+                        <strong id="totalVista">$0.00</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-primary btn-lg">Guardar orden</button>
+        <a asp-action="Index" class="btn btn-secondary btn-lg">Volver</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/orden.js"></script>
+}
+
+

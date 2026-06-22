@@ -1,0 +1,59 @@
+@model IEnumerable<Restaurante.Models.OrdenModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Órdenes</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Crear Nueva</a>
+</p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Cliente
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaOrden)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Subtotal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Iva)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Total)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @if(item.Cliente != null) {
+                    @(item.Cliente.Nombre + " " + item.Cliente.Apellido)
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaOrden)
+            </td>
+                <td>
+                    $@Html.DisplayFor(modelItem => item.Subtotal)
+                </td>
+            <td>
+                $@Html.DisplayFor(modelItem => item.Iva)
+            </td>
+            <td>
+                <strong>$@Html.DisplayFor(modelItem => item.Total)</strong>
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Detalles</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

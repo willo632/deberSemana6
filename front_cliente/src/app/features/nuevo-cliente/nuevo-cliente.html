@@ -1,0 +1,185 @@
+<div class="page-wrap">
+
+  <!-- ── Page header ─────────────────────────────── -->
+  <div class="page-header animate-fadeInUp">
+    <div>
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb-nav" aria-label="breadcrumb">
+        <a routerLink="/clientes" class="bc-link">
+          <i class="bi bi-people-fill me-1"></i>Clientes
+        </a>
+        <i class="bi bi-chevron-right bc-sep"></i>
+        <span class="bc-current">Nuevo Cliente</span>
+      </nav>
+      <h1 class="page-title mt-1">Nuevo Cliente</h1>
+      <p class="page-subtitle">Complete los datos para registrar un nuevo cliente en el sistema.</p>
+    </div>
+    <div class="page-actions">
+      <a routerLink="/clientes" class="btn btn-outline-secondary btn-xs">
+        <i class="bi bi-arrow-left me-1"></i>Cancelar
+      </a>
+    </div>
+  </div>
+
+  <!-- ── Success alert ─────────────────────────────── -->
+  @if (success()) {
+    <div class="alert-success-card animate-fadeInUp">
+      <div class="asc-icon"><i class="bi bi-check-circle-fill"></i></div>
+      <div>
+        <p class="asc-title">¡Cliente registrado exitosamente!</p>
+        <p class="asc-sub">Redirigiendo a la lista de clientes…</p>
+      </div>
+      <div class="asc-spinner">
+        <div class="spinner-border spinner-border-sm text-success" role="status"></div>
+      </div>
+    </div>
+  }
+
+  <!-- ── Error alert ─────────────────────────────── -->
+  @if (errorMsg()) {
+    <div class="alert-error-card animate-fadeInUp">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <span>{{ errorMsg() }}</span>
+      <button class="btn-close-alert" (click)="errorMsg.set('')" aria-label="Cerrar">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+  }
+
+  <!-- ── Form card ─────────────────────────────────── -->
+  @if (!success()) {
+    <div class="card-elevated form-card animate-fadeInUp" style="animation-delay:.1s">
+
+      <!-- Card header -->
+      <div class="fc-header">
+        <div class="fc-icon">
+          <i class="bi bi-person-plus-fill"></i>
+        </div>
+        <div>
+          <h6 class="fc-title">Información del Cliente</h6>
+          <p class="fc-sub">Los campos marcados con <span class="req-mark">*</span> son obligatorios.</p>
+        </div>
+      </div>
+
+      <hr class="fc-divider">
+
+      <!-- Form -->
+      <form [formGroup]="form" (ngSubmit)="submit()" novalidate autocomplete="off">
+        <div class="row g-4">
+
+          <!-- Cédula -->
+          <div class="col-md-6">
+            <div class="form-group" [class.has-error]="isInvalid('cedula')">
+              <label class="form-lbl" for="cedula">
+                <i class="bi bi-credit-card me-1"></i>Número de Cédula <span class="req-mark">*</span>
+              </label>
+              <input id="cedula" type="text" class="form-inp"
+                     formControlName="cedula"
+                     placeholder="Ej: 1234567890"
+                     inputmode="numeric" />
+              @if (isInvalid('cedula')) {
+                <span class="field-error">
+                  <i class="bi bi-exclamation-circle me-1"></i>{{ errorFor('cedula') }}
+                </span>
+              }
+            </div>
+          </div>
+
+          <!-- Nombres -->
+          <div class="col-md-6">
+            <div class="form-group" [class.has-error]="isInvalid('nombres')">
+              <label class="form-lbl" for="nombres">
+                <i class="bi bi-person me-1"></i>Nombres Completos <span class="req-mark">*</span>
+              </label>
+              <input id="nombres" type="text" class="form-inp"
+                     formControlName="nombres"
+                     placeholder="Ej: María Fernanda López" />
+              @if (isInvalid('nombres')) {
+                <span class="field-error">
+                  <i class="bi bi-exclamation-circle me-1"></i>{{ errorFor('nombres') }}
+                </span>
+              }
+            </div>
+          </div>
+
+          <!-- Correo -->
+          <div class="col-md-6">
+            <div class="form-group" [class.has-error]="isInvalid('correo')">
+              <label class="form-lbl" for="correo">
+                <i class="bi bi-envelope me-1"></i>Correo Electrónico <span class="req-mark">*</span>
+              </label>
+              <input id="correo" type="email" class="form-inp"
+                     formControlName="correo"
+                     placeholder="Ej: cliente@empresa.com" />
+              @if (isInvalid('correo')) {
+                <span class="field-error">
+                  <i class="bi bi-exclamation-circle me-1"></i>{{ errorFor('correo') }}
+                </span>
+              }
+            </div>
+          </div>
+
+          <!-- Teléfono -->
+          <div class="col-md-6">
+            <div class="form-group" [class.has-error]="isInvalid('telefono')">
+              <label class="form-lbl" for="telefono">
+                <i class="bi bi-telephone me-1"></i>Teléfono <span class="req-mark">*</span>
+              </label>
+              <input id="telefono" type="tel" class="form-inp"
+                     formControlName="telefono"
+                     placeholder="Ej: 3001234567"
+                     inputmode="tel" />
+              @if (isInvalid('telefono')) {
+                <span class="field-error">
+                  <i class="bi bi-exclamation-circle me-1"></i>{{ errorFor('telefono') }}
+                </span>
+              }
+            </div>
+          </div>
+
+          <!-- Dirección -->
+          <div class="col-12">
+            <div class="form-group" [class.has-error]="isInvalid('direccion')">
+              <label class="form-lbl" for="direccion">
+                <i class="bi bi-geo-alt me-1"></i>Dirección <span class="req-mark">*</span>
+              </label>
+              <input id="direccion" type="text" class="form-inp"
+                     formControlName="direccion"
+                     placeholder="Ej: Calle 123 # 45-67, Bogotá D.C." />
+              @if (isInvalid('direccion')) {
+                <span class="field-error">
+                  <i class="bi bi-exclamation-circle me-1"></i>{{ errorFor('direccion') }}
+                </span>
+              }
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ── Form actions ── -->
+        <div class="form-footer">
+          <button type="button" class="btn btn-outline-secondary btn-sm" (click)="reset()"
+                  [disabled]="saving()">
+            <i class="bi bi-eraser me-1"></i>Limpiar
+          </button>
+          <div class="d-flex gap-2">
+            <a routerLink="/clientes" class="btn btn-outline-secondary btn-sm">
+              <i class="bi bi-x me-1"></i>Cancelar
+            </a>
+            <button type="submit" class="btn btn-primary btn-sm submit-btn"
+                    [disabled]="saving()">
+              @if (saving()) {
+                <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                Guardando…
+              } @else {
+                <i class="bi bi-check2-circle me-1"></i>Guardar Cliente
+              }
+            </button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  }
+
+</div>

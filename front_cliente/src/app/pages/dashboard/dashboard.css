@@ -1,0 +1,167 @@
+/* page-wrap, page-header, page-title, page-subtitle, page-actions → styles.css */
+
+/* ── KPI Card ────────────────────── */
+.kpi-card { padding: 1.25rem 1.375rem; }
+
+.kpi-head { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: .75rem; }
+.kpi-label {
+  font-size: .75rem; font-weight: 700;
+  color: var(--clr-text-muted,#64748b);
+  text-transform: uppercase; letter-spacing: .05em;
+}
+.kpi-icon {
+  width: 42px; height: 42px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.125rem; flex-shrink: 0;
+}
+.kpi-val {
+  font-size: 1.8rem; font-weight: 800;
+  color: var(--clr-text,#1e293b);
+  letter-spacing: -.04em; line-height: 1.1;
+  margin-bottom: .5rem;
+}
+.kpi-foot { display: flex; align-items: center; gap: .375rem; }
+.kpi-badge {
+  display: inline-flex; align-items: center;
+  font-size: .73rem; font-weight: 700;
+  padding: 2px 7px; border-radius: 50px;
+}
+.kpi-up   { background: #dcfce7; color: #15803d; }
+.kpi-down { background: #fee2e2; color: #b91c1c; }
+.kpi-vs   { font-size: .73rem; color: var(--clr-text-muted,#64748b); }
+
+/* ── Chart Card ──────────────────── */
+.chart-card { padding: 1.375rem; }
+
+.cc-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.cc-title { font-size: .9375rem; font-weight: 700; color: var(--clr-text,#1e293b); margin: 0 0 .2rem; }
+.cc-sub   { font-size: .775rem; color: var(--clr-text-muted,#64748b); margin: 0; }
+.cc-link  { font-size: .8rem; font-weight: 600; color: var(--clr-primary,#0d6efd); text-decoration: none; white-space: nowrap; flex-shrink: 0; }
+
+.cc-legend { display: flex; align-items: center; gap: .35rem; font-size: .75rem; color: var(--clr-text-muted,#64748b); flex-shrink: 0; }
+.lg-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+
+/* Chart layout */
+.chart-area { display: flex; gap: .75rem; margin-top: 1.25rem; }
+
+.y-labels {
+  display: flex; flex-direction: column; justify-content: space-between;
+  font-size: .65rem; color: #94a3b8; text-align: right;
+  padding-bottom: 1.5rem; flex-shrink: 0;
+}
+
+.bars-wrap { flex: 1; position: relative; }
+
+.grid-lines {
+  position: absolute; inset: 0 0 1.5rem 0;
+  display: flex; flex-direction: column; justify-content: space-between;
+  pointer-events: none;
+}
+.gl { border-top: 1px dashed #e2e8f0; }
+
+.bars {
+  display: flex; align-items: flex-end; gap: .375rem;
+  height: 200px; padding-top: 1rem;
+}
+
+.bar-col {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; gap: .375rem; height: 100%;
+  position: relative; cursor: pointer;
+}
+.bar-tip {
+  position: absolute; top: -26px;
+  background: var(--clr-text,#1e293b); color: #fff;
+  font-size: .62rem; font-weight: 700;
+  padding: 2px 7px; border-radius: 5px;
+  opacity: 0; transition: opacity .2s; pointer-events: none; white-space: nowrap;
+}
+.bar-col:hover .bar-tip { opacity: 1; }
+
+.bar-fill {
+  width: 100%; min-height: 4px; margin-top: auto;
+  background: linear-gradient(180deg, var(--clr-primary,#0d6efd) 0%, #60a5fa 100%);
+  border-radius: 5px 5px 0 0;
+  transition: opacity .2s, filter .2s;
+}
+.bar-col:hover .bar-fill { filter: brightness(1.1); }
+
+.bar-lbl { font-size: .65rem; font-weight: 600; color: #94a3b8; white-space: nowrap; }
+
+/* ── Top Products ─────────────────── */
+.tp-card { padding: 1.375rem; height: 100%; display: flex; flex-direction: column; }
+
+.tp-list { display: flex; flex-direction: column; gap: .9rem; flex: 1; }
+
+.tp-item { display: flex; align-items: center; gap: .75rem; }
+.tp-rank {
+  width: 22px; height: 22px; border-radius: 6px;
+  background: #f1f5f9;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .7rem; font-weight: 800;
+  color: var(--clr-text-muted,#64748b); flex-shrink: 0;
+}
+.tp-info { flex: 1; min-width: 0; }
+.tp-name {
+  font-size: .8rem; font-weight: 600;
+  color: var(--clr-text,#1e293b);
+  margin-bottom: .3rem;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.tp-bar-wrap { display: flex; align-items: center; gap: .5rem; }
+.tp-track { flex: 1; height: 5px; background: #f1f5f9; border-radius: 3px; overflow: hidden; }
+.tp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--clr-primary,#0d6efd), var(--clr-accent,#06b6d4));
+  border-radius: 3px;
+  transition: width .6s cubic-bezier(.4,0,.2,1);
+}
+.tp-sales { font-size: .68rem; color: var(--clr-text-muted,#64748b); white-space: nowrap; }
+.tp-rev { font-size: .8rem; font-weight: 700; color: var(--clr-text,#1e293b); flex-shrink: 0; }
+
+/* ── Orders table ─────────────────── */
+.tbl-card { padding: 1.375rem; }
+
+.ord-table thead th {
+  font-size: .72rem; font-weight: 800;
+  color: var(--clr-text-muted,#64748b);
+  text-transform: uppercase; letter-spacing: .05em;
+  border-bottom: 2px solid #f1f5f9;
+  padding: .625rem .75rem; white-space: nowrap;
+  background: transparent;
+}
+.ord-table tbody td {
+  vertical-align: middle; border-color: #f8fafc;
+  font-size: .875rem; padding: .75rem;
+}
+.ord-table tbody tr { transition: background var(--transition,.2s); }
+.ord-table tbody tr:hover td { background: #f8fafc; }
+
+.ord-id {
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-size: .78rem; background: #f1f5f9;
+  padding: 2px 8px; border-radius: 5px;
+  color: var(--clr-text,#1e293b);
+}
+
+.cl-cell { display: flex; align-items: center; gap: .625rem; }
+.cl-av {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--clr-primary,#0d6efd), var(--clr-secondary,#4f46e5));
+  color: #fff; display: flex; align-items: center; justify-content: center;
+  font-size: .72rem; font-weight: 800; flex-shrink: 0;
+}
+
+.prod-cell { color: var(--clr-text-muted,#64748b); }
+.amt-cell  { font-weight: 700; color: var(--clr-text,#1e293b); }
+.dt-cell   { color: var(--clr-text-muted,#64748b); font-size: .8rem; white-space: nowrap; }
+
+.row-act {
+  display: flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px;
+  border: none; background: transparent;
+  border-radius: 6px; cursor: pointer;
+  color: var(--clr-text-muted,#64748b);
+  transition: background var(--transition,.2s);
+}
+.row-act:hover { background: #f1f5f9; color: var(--clr-text,#1e293b); }
